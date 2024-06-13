@@ -5,4 +5,4 @@ PyTorch implementation of our square-root-free adaptive methods based on [Can We
 Todo
 * add the root-free RMSProp and IF-Shampoo
 * add NN models and training scripts considered in our paper
-* add the HyperParameter(HP) search space for each adaptive method (in the second stage) and the optimal HPs used in our paper
+* add the HyperParameter (HP) search space for each adaptive method (in the second stage) and the optimal HPs used in our paper
