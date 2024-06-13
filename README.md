@@ -12,15 +12,15 @@ Unlike Choi et al. (2019), we only consider a small damping term (e.g., 0 < λ <
 In the first stage, we use larger search regimes for all HPs. Based on this stage, we select a narrower
 HP range and re-run the search, reporting the best run for each method. In each stage, we use 100 runs.
 
-## Mixed-precesion Training 
+## Mixed-precision Training 
 For all optimizers, only the forward pass is executed in mixed precision with BFP-16 (as
 recommended by the official PyTorch guide). The gradients are automatically cast back to FP-32 by PyTorch. Shampoo uses
 these FP-32 gradients for its preconditioner and is unstable when converting them to BFP-16 (Shi et al., 2023) . Instead, our
 IF-Shampoo converts the gradients into BFP-16, updates the preconditioner, and even takes preconditioned gradient steps in
-half precision. Our method works well in half precision without using matrix decomposition and matrix solve/inversion.
-These matrix operations in half precision are not supported in PyTorch and JAX because they are numerically unstable.
+half precision. Our method works well in half-precision without using matrix decomposition and matrix solve/inversion.
+These matrix operations in half-precision are not supported in PyTorch and JAX because they are numerically unstable.
 
 # Todo
-* add the root-free RMSProp and IF-Shampoo
+* add the root-free RMSProp and inverse-free Shampoo
 * add NN models and training scripts considered in our paper
 * add the HyperParameter (HP) search space for each adaptive method (in the second stage) and the optimal HPs used in our paper
