@@ -18,7 +18,7 @@ these `FP-32` gradients for its preconditioner and is unstable when converting t
 IF-Shampoo converts the gradients into `BFP-16`, updates the preconditioner, and even takes preconditioned gradient steps (including momentum) in
 half precision. Our method works well in half-precision `without` using `matrix decomposition` and `matrix solve/inversion`.
 
-Note: These matrix operations in half-precision are not supported in PyTorch and JAX because they are numerically unstable.
+Note: These matrix operations in `half-precision` are not supported in PyTorch and JAX because they are numerically unstable.
 
 # Todo
 * add the root-free RMSProp and inverse-free Shampoo
