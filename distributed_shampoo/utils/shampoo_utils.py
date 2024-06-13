@@ -598,6 +598,8 @@ class ShampooPreconditioner(DistributedPreconditioner):
                 num_params = 2 * dim**2
 
             # Counts parameters and adds to lists.
+            if preconditioner_type == PreconditionerType.FULL:
+                is_diagonal = False
             self._parameter_count += num_params
             self._num_bytes += num_params * get_dtype_size(dtype)
             self._preconditioners.append(
@@ -606,6 +608,7 @@ class ShampooPreconditioner(DistributedPreconditioner):
                     factor_matrix,
                     inv_factor_matrix,
                     index,
+                    is_diagonal = is_diagonal,
                 )
             )
 
