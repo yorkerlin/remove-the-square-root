@@ -23,4 +23,4 @@ Note: These matrix operations in half-precision are not supported in PyTorch and
 # Todo
 * add the root-free RMSProp and inverse-free Shampoo
 * add NN models and training scripts considered in our paper
-* add the HyperParameter (HP) search space for each adaptive method (in the second stage) and the optimal HPs used in our paper
+* add our HP search space for each method (in the second stage) and the optimal HPs used in our paper
