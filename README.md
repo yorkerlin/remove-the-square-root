@@ -6,7 +6,7 @@ We use PyTorch’s built-in SGD, AdamW, and RMSProp. For Shampoo, we rely on the
 state-of-the-art [PyTorch implementation](https://github.com/facebookresearch/optimizers/tree/main/distributed_shampoo) from Meta [(Shi et al., 2023)](https://arxiv.org/abs/2309.06497). We tune the hyperparameters (HPs) for each optimizer (see the HP search space)
 
 ## Hyperparameter Tuning 
-For matrix adaptive methods (Shampoo and IF-Shampoo), we update their matrix preconditioners at each two iterations.
+For matrix adaptive methods (Shampoo and inverse-free Shampoo), we update their matrix preconditioners at each two iterations.
 We employ a two-stage HP tuning protocol for all tasks and optimizers based on random search [(Choi et al., 2019)](https://arxiv.org/abs/1910.05446). 
 Unlike  [Choi et al., 2019](https://arxiv.org/abs/1910.05446), we only consider a `small damping` term (e.g., 0 < λ < 10−4) for all methods in our HP search space. 
 In the first stage, we use larger search regimes for all HPs. Based on this stage, we select a narrower HP range and re-run the search, reporting the best run for each method. We use 100 runs in each stage.
