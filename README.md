@@ -18,6 +18,7 @@ recommended by the official PyTorch guide). The gradients are automatically cast
 these FP-32 gradients for its preconditioner and is unstable when converting them to BFP-16 (Shi et al., 2023) . Instead, our
 IF-Shampoo converts the gradients into BFP-16, updates the preconditioner, and even takes preconditioned gradient steps in
 half precision. Our method works well in half-precision ***without*** using ***matrix decomposition*** and ***matrix solve/inversion***.
+
 Note: These matrix operations in half-precision are not supported in PyTorch and JAX because they are numerically unstable.
 
 # Todo
