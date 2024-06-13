@@ -3,7 +3,7 @@ PyTorch implementation of our square-root-free adaptive methods (root-free RMSPr
 
 ## Baseline Adaptive Methods
 We use PyTorch’s built-in SGD, AdamW, and RMSProp. For Shampoo, we rely on the
-state-of-the-art [PyTorch implementation](https://github.com/facebookresearch/optimizers/tree/main/distributed_shampoo) from Meta [(Shi et al., 2023)](https://arxiv.org/abs/2309.06497). We tune most of the hyperparameters (HPs) for each optimizer (see the HP search space)
+state-of-the-art [PyTorch implementation](https://github.com/facebookresearch/optimizers/tree/main/distributed_shampoo) from Meta [(Shi et al., 2023)](https://arxiv.org/abs/2309.06497). We tune the hyperparameters (HPs) for each optimizer (see the HP search space)
 
 ## Hyperparameter Tuning 
 For matrix adaptive methods (Shampoo and IF-Shampoo), we update their matrix preconditioners at each two iterations.
