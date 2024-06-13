@@ -10,7 +10,7 @@ For matrix adaptive methods (Shampoo and IF-Shampoo), we update their matrix pre
 We employ a two-stage HP tuning protocol for all tasks and optimizers based on random search (Choi et al., 2019).
 Unlike Choi et al. (2019), we only consider a small damping term (e.g., 0 < λ < 10−4) in our HP search for all methods. 
 In the first stage, we use larger search regimes for all HPs. Based on this stage, we select a narrower
-HP range and re-run the search, reporting the best run for each method. In each stage, we use 100 runs.
+HP range and re-run the search, reporting the best run for each method. We use 100 runs in each stage.
 
 ## Mixed-precision Training 
 For all optimizers, only the forward pass is executed in mixed precision with BFP-16 (as
