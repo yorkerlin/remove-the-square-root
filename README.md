@@ -8,7 +8,7 @@ state-of-the-art [PyTorch implementation](https://github.com/facebookresearch/op
 ## Hyperparameter Tuning 
 For matrix adaptive methods (Shampoo and inverse-free Shampoo), we update their matrix preconditioners at each two iterations.
 We employ a two-stage HP tuning protocol for all tasks and optimizers based on random search [(Choi et al., 2019)](https://arxiv.org/abs/1910.05446). 
-Unlike  [Choi et al., 2019](https://arxiv.org/abs/1910.05446), we only consider a `small damping` term (e.g., 0 < λ < 50−4) for all methods in our HP search space. 
+Unlike  [Choi et al., 2019](https://arxiv.org/abs/1910.05446), we only consider a `small damping` term (e.g., 0 < λ < 5e−4) for all methods in our HP search space. 
 In the first stage, we use larger search regimes for all HPs. Based on this stage, we select a narrower HP range and re-run the search, reporting the best run for each method. We use 100 runs in each stage.
 
 ## Mixed-precision Training 
