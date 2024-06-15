@@ -1,7 +1,7 @@
 PyTorch implementation of our square-root-free adaptive methods (root-free RMSProp and Inverse-free Shampoo without the root) based on [Can We Remove the Square-Root in Adaptive Gradient Methods? A Second-Order Perspective (ICML 2024)](https://arxiv.org/abs/2402.03496)
 
 
-## Baseline Adaptive Methods
+## Baseline Methods (Square-root-based methods)
 We use PyTorch’s built-in SGD, AdamW, and RMSProp. For Shampoo, we rely on the
 state-of-the-art [PyTorch implementation](https://github.com/facebookresearch/optimizers/tree/main/distributed_shampoo) from Meta [(Shi et al., 2023)](https://arxiv.org/abs/2309.06497). We tune the hyperparameters (HPs) for each optimizer (see the HP search space)
 
