@@ -2,7 +2,7 @@ Experiment code to reproduce results on [Can We Remove the Square-Root in Adapti
 
 We provide a prototype implementation of the root-free RMSProp and inverse-free Shampoo.
 
-For a clean implementation, please check out this [repository](https://github.com/f-dangel/sirfshampoo) 
+For a clean implementation of the inverse-free Shampoo, please check out this [repository](https://github.com/f-dangel/sirfshampoo) 
 
 
 ## Baseline Methods (Square-root-based Methods)
