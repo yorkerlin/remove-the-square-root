@@ -1,4 +1,7 @@
-PyTorch implementation of our square-root-free adaptive methods (root-free RMSProp and Inverse-free Shampoo without the root) based on [Can We Remove the Square-Root in Adaptive Gradient Methods? A Second-Order Perspective (ICML 2024)](https://arxiv.org/abs/2402.03496)
+Experiment code to reproduce results on [Can We Remove the Square-Root in Adaptive Gradient Methods? A Second-Order Perspective (ICML 2024)](https://arxiv.org/abs/2402.03496)
+
+We provide a prototype implementation of the root-free RMSProp and inverse-free Shampoo.
+For a clean implementation, please check out this [repository](https://github.com/f-dangel/sirfshampoo) 
 
 
 ## Baseline Methods (Square-root-based Methods)
