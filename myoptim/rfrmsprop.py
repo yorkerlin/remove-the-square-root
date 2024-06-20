@@ -24,7 +24,7 @@ class MyRmsProp(optim.Optimizer):
         if not 0.0 <= alpha:
             raise ValueError("Invalid alpha value: {}".format(alpha))
 
-        print('my rmsprop v2', cast_dtype)
+        print('rf-rmsprop', cast_dtype)
         defaults = dict(lr=lr, momentum=momentum, alpha=alpha, eps=eps, weight_decay=weight_decay)
 
         self.dummy_init=dummy_init
