@@ -19,7 +19,7 @@ HP search space: [CNNs](https://github.com/yorkerlin/remove-the-square-root/tree
 
 ## Mixed-precision Training 
 For all optimizers, only the forward pass is executed in mixed precision with `BFP-16` (as
-recommended by the official PyTorch guide). The gradients are automatically cast back to FP-32 by PyTorch. Shampoo uses
+recommended by the [official PyTorch guide](https://pytorch.org/docs/stable/amp.html#torch.autocast)). The gradients are automatically cast back to FP-32 by PyTorch. Shampoo uses
 these `FP-32` gradients for its preconditioner and is unstable when converting them to BFP-16 [(Shi et al., 2023)](https://arxiv.org/abs/2309.06497). Instead, our
 IF-Shampoo converts the gradients into `BFP-16`, updates the preconditioner, and even takes preconditioned gradient steps (including momentum) in
 half-precision. Our method works well in half-precision `without` using `matrix decomposition` and `matrix solve/inversion`.
