@@ -8,17 +8,26 @@ from torch.nn import Conv2d, Linear
 from contextlib import suppress
 from functools import partial
 
+import math
 import torch
 import torch.nn as nn
 import torch.optim as optim
 from scaler_timm import NativeScaler
 sys.path.append(os.path.join(os.path.dirname(__file__), "../../"))
-from myoptim import  OrgRMSprop, MyRmsProp
+from myoptim import MyRmsProp
 
 from torch.optim.lr_scheduler import MultiStepLR, ConstantLR
 from tqdm import tqdm
 from utils.data_utils import get_dataloader
 from utils.network_utils import get_network
+
+def make_criterion(loss):
+    if loss == 'CrossEntropy':
+        criterion = nn.CrossEntropyLoss().cuda()
+    elif loss == 'MSE':
+        criterion = nn.MSELoss().cuda()
+    return criterion
+
 
 
 def count_parameters(model):
@@ -31,6 +40,8 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument("--network", default="vgg16_bn", type=str)
 parser.add_argument("--dataset", default="cifar10", type=str)
+parser.add_argument('--loss', default='CrossEntropy', type=str,
+                    help='loss type')
 
 parser.add_argument("--device", default="cuda", type=str)
 parser.add_argument("--resume", "-r", action="store_true")
@@ -66,7 +77,6 @@ parser.add_argument(
     action="store_true",
     default=False,
 )
-
 args = parser.parse_args()
 
 # init model
@@ -84,7 +94,6 @@ net = get_network(args.network, num_classes=num_classes)
 net = net.to(args.device)
 
 
-
 # init dataloader
 trainloader, testloader = get_dataloader(
     dataset=args.dataset, train_batch_size=args.batch_size, test_batch_size=256
@@ -97,6 +106,7 @@ data_name = args.dataset
 model_name = args.network
 print(optim_name)
 print(count_parameters(net))
+print(args.loss)
 
 
 if optim_name.startswith("sgd"):
@@ -124,28 +134,6 @@ elif optim_name.startswith("adamw"):
         eps=args.damping,
         betas=(args.momentum, 1.0 - args.lr_cov),
     )
-
-elif optim_name.startswith("orgrmsprop"):
-    args.amp = False
-    if optim_name.find("^") > 0:
-        if optim_name.split("^")[1] == "amp":
-            print("enable amp")
-            args.amp = True
-
-    amp_dtype = torch.float32
-    if args.amp:
-        amp_dtype = torch.bfloat16
-
-    optimizer = OrgRMSprop(
-        net.parameters(),
-        lr=args.learning_rate,
-        alpha= 1.0 - args.lr_cov,
-        eps=args.damping,
-        weight_decay=args.weight_decay,
-        momentum=args.momentum,
-        cast_dtype=amp_dtype,
-    )
-
 
 elif optim_name.startswith("rfrmsprop"):
     args.amp = False
@@ -205,7 +193,7 @@ else:
 
 
 # init criterion
-criterion = nn.CrossEntropyLoss()
+criterion = make_criterion(args.loss)
 
 start_epoch = 0
 if args.resume:
@@ -251,14 +239,25 @@ def train(epoch):
     )
 
     batch_time = 0.0
+    M = 30
+    k = math.sqrt(15)
     for batch_idx, (inputs, targets) in prog_bar:
         inputs, targets = inputs.to(args.device), targets.to(args.device)
+
+        if args.loss == 'MSE':
+               mask = nn.functional.one_hot(targets, num_classes=num_classes).type(torch.FloatTensor).to('cuda')
+               rms_targets = mask * (M*k)
+               scaling_mask = mask * (k-1) + 1
+
         end = time.time()
         optimizer.zero_grad()
 
         with amp_autocast():
             outputs = net(inputs)
-            loss = criterion(outputs, targets)
+            if args.loss == 'CrossEntropy':
+               loss = criterion(outputs, targets)
+            elif args.loss == 'MSE':
+               loss = criterion(outputs * scaling_mask, rms_targets)
 
         train_loss += loss.item()
 
@@ -328,15 +327,28 @@ def test(epoch, info):
         total,
     )
 
+    M = 30
+    k = math.sqrt(15)
     prog_bar = tqdm(enumerate(testloader), total=len(testloader), desc=desc, leave=True)
     with torch.no_grad():
         for batch_idx, (inputs, targets) in prog_bar:
             inputs, targets = inputs.to(args.device), targets.to(args.device)
 
+            if args.loss == 'MSE':
+                   # we use a loss rescaling for MSE losses
+                   # https://arxiv.org/abs/2006.07322
+                   mask = nn.functional.one_hot(targets, num_classes=num_classes).type(torch.FloatTensor).to('cuda')
+                   rms_targets = mask * (M*k)
+                   scaling_mask = mask * (k-1) + 1
+
             with amp_autocast():
                 outputs = net(inputs)
+                if args.loss == 'CrossEntropy':
+                   loss = criterion(outputs, targets)
+                elif args.loss == 'MSE':
+                   loss = criterion(outputs * scaling_mask, rms_targets)
 
-            loss = criterion(outputs, targets)
+
             test_loss += loss.item()
 
             _, predicted = outputs.max(1)
@@ -365,7 +377,11 @@ def main():
     opt_run_name = optim_name
 
     run_name = "%s-%s-%s" % (opt_run_name, args.network, socket.gethostname())
-    # wandb.init(project="%s-better-exp" % (args.network), name=run_name, config=args)
+
+    # if args.loss == 'CrossEntropy':
+        # wandb.init(project="%s-better-exp" % (args.network), name=run_name, config=args)
+    # else:
+        # wandb.init(project="%s-%s-better-exp" % (args.network,args.loss), name=run_name, config=args)
 
     print(optim_name, args.learning_rate, args.beta2, args.momentum)
     info = {}

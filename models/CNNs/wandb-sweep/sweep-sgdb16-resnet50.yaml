@@ -1,0 +1,32 @@
+program: main_search.py
+command:
+    - ${env}
+    - python
+    - ${program}
+    - "--dataset=cifar100"
+    - "--optimizer=sgd^amp"
+    - "--network=resnet50"
+    - "--batch_size=128"
+    - "--epoch=120"
+    - "--milestone=40,80"
+    - ${args}
+method: random
+metric:
+    goal: maximize
+    name: acc1
+parameters:
+    learning_rate:
+        min: 1e-2
+        max: 0.12
+        distribution: log_uniform_values
+
+    momentum:
+        min: 0.1
+        max: 0.9
+        distribution: log_uniform_values
+
+    weight_decay:
+        min: 1e-6
+        max: 1e-2
+        distribution: log_uniform_values
+

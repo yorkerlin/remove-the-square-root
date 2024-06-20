@@ -46,13 +46,14 @@ python main_search.py --dataset=cifar100 --optimizer=sgd^amp --network=densenet1
 --weight_decay=0.0016479442205489954
 
 ##########################################
+
+##########################################
 #vgg16
 
 #RF-RMSProp
-python main_search.py --dataset=cifar100 --optimizer=myrmsprop^amp --network=vgg16_bn --batch_size=128 --epoch=210 \
+python main_search.py --dataset=cifar100 --optimizer=rfrmsprop^amp --network=vgg16_bn --batch_size=128 --epoch=210 \
 --milestone=70,140 --damping=1.851481010567565e-05 --learning_rate=0.017272044650469536 --lr_cov=0.0005792396714807309 \
 --momentum=0.5656673653182214 --weight_decay=0.01718894619410476
-
 
 #AdamW
 python main_search.py --dataset=cifar100 --optimizer=adamw^amp --network=vgg16_bn --batch_size=128 --epoch=210 \
@@ -63,5 +64,44 @@ python main_search.py --dataset=cifar100 --optimizer=adamw^amp --network=vgg16_b
 #SGD
 python main_search.py --dataset=cifar100 --optimizer=sgd^amp --network=vgg16_bn --batch_size=128 --epoch=210 --milestone=70,140 \
 --learning_rate=0.037374256063377374 --momentum=0.3384663251382076 --weight_decay=0.011260232037778147
+
+##########################################
+
+##########################################
+#resnet50 (MSE)
+
+#RF-RMSProp
+python main_search.py --dataset=cifar100 --optimizer=rfrmsprop^amp --network=resnet50 --batch_size=128 --epoch=120 \
+--milestone=40,80 --loss=MSE --damping=5.127774046983131e-07 --learning_rate=0.025330674752044795 \
+--lr_cov=0.00011615353944317813 --momentum=0.008169447479672387 --weight_decay=0.013375074816698857
+
+
+#AdamW
+python main_search.py --dataset=cifar100 --optimizer=adamw^amp --network=resnet50 --batch_size=128 --epoch=120 \
+--milestone=40,80 --loss=MSE --damping=1.7616375727721205e-07 --learning_rate=0.0007941250380464385 \
+--lr_cov=0.0023231894529067184 --momentum=0.05651164523805084 --weight_decay=0.08533212690148191
+
+#SGD
+python main_search.py --dataset=cifar100 --optimizer=sgd^amp --network=resnet50 --batch_size=128 --epoch=120 \
+--milestone=40,80 --loss=MSE --learning_rate=0.026292518423440252 --momentum=0.01884664197827682 --weight_decay=0.01503483519928978
+
+##########################################
+
+##########################################
+#resnet50 (CE)
+
+#RF-RMSProp
+python main_search.py --dataset=cifar100 --optimizer=rfrmsprop^amp --network=resnet50 --batch_size=128 --epoch=120 \
+--milestone=40,80 --damping=0.0001953364641974442 --learning_rate=0.006658148773631732 \
+--lr_cov=0.0014955219047061044 --momentum=0.8772268947323498 --weight_decay=0.006989184243424921
+
+#AdamW
+python main_search.py --dataset=cifar100 --optimizer=adamw^amp --network=resnet50 --batch_size=128 --epoch=120 \
+--milestone=40,80 --damping=1.9844866627164052e-10 --learning_rate=0.0006057004451294392 \
+--lr_cov=0.00011781133190708046 --momentum=0.350605738904743 --weight_decay=0.08982500882800608
+
+#SGD
+python main_search.py --dataset=cifar100 --optimizer=sgd^amp --network=resnet50 --batch_size=128 --epoch=120 \
+--milestone=40,80 --learning_rate=0.07363314063288963 --momentum=0.4077024332074053 --weight_decay=0.005295266537207944
 
 
