@@ -1,9 +1,9 @@
 #source  ~/mambaforge/etc/profile.d/conda.sh
-source  /scratch-ssd/wlin/mambaforge/etc/profile.d/conda.sh
+#source  /scratch-ssd/wlin/mambaforge/etc/profile.d/conda.sh
 conda activate pytorch2-latest
 
-
 # we train NN models with bfloat16 (amp is enabled)
+# our method: root-free RMSProp (RF-RMSProp)
 
 ##########################################
 #resnet34
