@@ -818,7 +818,7 @@ class ShampooPreconditioner(DistributedPreconditioner):
                     matrix_product_idx = deepcopy(gradient_idx)
                     matrix_product_idx[k] = 0
                     preconditioned_grad = torch.einsum(
-                        inv_factor_matrix,
+                        inv_factor_matrix.to(torch.float32),
                         [0, k + 1],
                         preconditioned_grad,
                         gradient_idx,
