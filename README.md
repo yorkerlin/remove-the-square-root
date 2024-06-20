@@ -1,6 +1,6 @@
 Experiment code to reproduce results on [Can We Remove the Square-Root in Adaptive Gradient Methods? A Second-Order Perspective (ICML 2024)](https://arxiv.org/abs/2402.03496)
 
-We provide a prototype implementation of the root-free RMSProp and inverse-free Shampoo.
+We provide a prototype implementation of the [root-free RMSProp](https://github.com/yorkerlin/remove-the-square-root/blob/main/myoptim/rfrmsprop.py) and inverse-free Shampoo.
 
 For a clean implementation of the inverse-free Shampoo, please check out this [repository](https://github.com/f-dangel/sirfshampoo).
 
