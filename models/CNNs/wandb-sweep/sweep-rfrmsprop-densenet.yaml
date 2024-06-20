@@ -1,0 +1,42 @@
+program: main_search.py
+command:
+    - ${env}
+    - python
+    - ${program}
+    - "--dataset=cifar100"
+    - "--optimizer=rfrmsprop^amp"
+    - "--network=densenet121"
+    - "--batch_size=128"
+    - "--epoch=210"
+    - "--milestone=70,140"
+    - ${args}
+method: random
+metric:
+    goal: maximize
+    name: acc1
+parameters:
+    learning_rate:
+        min: 5e-3
+        max: 1e-1
+        distribution: log_uniform_values
+
+    damping:
+        min: 5e-6
+        max: 5e-4
+        distribution: log_uniform_values
+
+    lr_cov:
+        min: 5e-4
+        max: 5e-3
+        distribution: log_uniform_values
+
+    weight_decay:
+        min: 1e-5
+        max: 5e-3
+        distribution: log_uniform_values
+
+    momentum:
+        min: 0.5
+        max: 0.99
+        distribution: log_uniform_values
+
