@@ -24,7 +24,7 @@ these `FP-32` gradients for its preconditioner and is unstable when converting t
 IF-Shampoo converts the gradients into `BFP-16`, updates the preconditioner, and even takes preconditioned gradient steps (including momentum) in
 half-precision. Our method works well in half-precision `without` using `matrix decomposition` and `matrix solve/inversion`.
 
-Note: These matrix operations (e.g., eigen, Cholesky, SVD, inversion) in `half-precision` are not supported in PyTorch and JAX because they are numerically unstable (see [inversion](https://github.com/pytorch/pytorch/issues/40427), [SVD](https://github.com/NVIDIA/apex/issues/887)).
+Note: These matrix operations (e.g., eigen, Cholesky, SVD, inversion) in `half-precision` are not supported in PyTorch and JAX because they are numerically unstable (see discussions on [inversion](https://github.com/pytorch/pytorch/issues/40427), [SVD](https://github.com/NVIDIA/apex/issues/887), [Cholesky](https://github.com/tensorflow/tensorflow/issues/56226)).
 
 # Todo
 * add NN models and training scripts considered in our paper
