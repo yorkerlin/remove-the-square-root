@@ -1,0 +1,45 @@
+program: main_search.py
+command:
+    - ${env}
+    - torchrun
+    - "--rdzv-backend=c10d"
+    - "--rdzv-endpoint=localhost:0"
+    - "--nnodes=1"
+    - "--nproc-per-node=1"
+    - ${program}
+    - "--cfg=configs/swin/swin_tiny_patch4_window7_224.yaml"
+    - "--data-path=./datasets/imagewoof2/"
+    - "--batch-size=128"
+    - "--opt_name=adamw"
+    - ${args}
+method: random
+metric:
+    goal: maximize
+    name: acc1
+parameters:
+    lr:
+        min: 1e-4
+        max: 3e-3
+        distribution: log_uniform_values
+
+    wt:
+        min: 5e-4
+        max: 1e-1
+        distribution: log_uniform_values
+
+    lr_cov:
+        min: 5e-4
+        max: 1e-1
+        distribution: log_uniform_values
+
+    damping:
+        min: 1e-10
+        max: 1e-7
+        distribution: log_uniform_values
+
+    momentum:
+        min: 0.5
+        max: 0.99
+        distribution: log_uniform_values
+
+
