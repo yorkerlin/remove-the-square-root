@@ -15,7 +15,7 @@ We employ a two-stage HP tuning protocol for all tasks and optimizers based on r
 Unlike  [Choi et al., 2019](https://arxiv.org/abs/1910.05446), we only consider a `small damping` term (e.g., 0 < λ < 5e−4) for all methods in our HP search space. 
 In the first stage, we use larger search regimes for all HPs. Based on this stage, we select a narrower HP range and re-run the search, reporting the best run for each method. We use 100 runs in each stage.
 
-HP search space: [CNNs](https://github.com/yorkerlin/remove-the-square-root/tree/main/models/CNNs/wandb-sweep)
+HP search space: [CNNs](https://github.com/yorkerlin/remove-the-square-root/tree/main/models/CNNs/wandb-sweep), [SwinViT](https://github.com/yorkerlin/remove-the-square-root/tree/main/models/ViTs/Swin-Transformer/wandb-sweep)
 
 ## Mixed-precision Training 
 For all optimizers, only the forward pass is executed in mixed precision with `BFP-16` (as
