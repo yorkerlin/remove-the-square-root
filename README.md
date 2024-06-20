@@ -27,6 +27,5 @@ half-precision. Our method works well in half-precision `without` using `matrix 
 Note: These matrix operations in `half-precision` are not supported in PyTorch and JAX because they are numerically unstable.
 
 # Todo
-* add the root-free RMSProp and inverse-free Shampoo
 * add NN models and training scripts considered in our paper
 * add our HP search space for each method (in the second stage) and the optimal HPs used in our paper
