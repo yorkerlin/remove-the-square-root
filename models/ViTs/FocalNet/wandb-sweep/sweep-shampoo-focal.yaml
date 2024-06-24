@@ -1,0 +1,59 @@
+program: train.py
+command:
+    - ${env}
+    - torchrun
+    - "--rdzv-backend=c10d"
+    - "--rdzv-endpoint=localhost:0"
+    - "--nnodes=1"
+    - "--nproc-per-node=1"
+    - ${program}
+    - "--data-dir=datasets/imagewoof2"
+    - "--epochs=300"
+    - "--num-classes=10"
+    - "--sched=cosine"
+    - "--warmup-epochs=5"
+    - "--batch-size=128"
+    - "--reprob=0.25"
+    - "--remode=pixel"
+    - "--smoothing=0.1"
+    - "--layer-decay=0.6"
+    - "--drop-path=0.1"
+    - "--model=focalnet_tiny_srf"
+    - "--experiment=focalnet-exp"
+    - "--log-wandb"
+    - "--opt=shampoo"
+    - "--T=2"
+    - "--amp"
+    - "--amp-dtype=bfloat16"
+    - ${args}
+    - "-j 4"
+method: random
+metric:
+    goal: maximize
+    name: eval_top1
+parameters:
+    damping:
+        min: 1e-10
+        max: 1e-5
+        distribution: log_uniform_values
+
+    lr_cov:
+        min: 5e-4
+        max: 1e-1
+        distribution: log_uniform_values
+
+    lr:
+        min: 5e-3
+        max: 1e-1
+        distribution: log_uniform_values
+
+    weight-decay:
+        min: 0.00005
+        max: 0.05
+        distribution: log_uniform_values
+
+    momentum:
+        min: 0.1
+        max: 0.99
+        distribution: log_uniform_values
+
