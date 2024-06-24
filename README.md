@@ -15,7 +15,7 @@ We employ a two-stage HP tuning protocol for all tasks and optimizers based on r
 Unlike  [Choi et al., 2019](https://arxiv.org/abs/1910.05446), we only consider a `small damping` term (e.g., 0 < λ < 5e−4) for all methods in our HP search space since a large damping term (e.g., λ >1)  can turn Adam into SGD.
 In the first stage, we use larger search regimes for all HPs. Based on this stage, we select a narrower HP range and re-run the search, reporting the best run for each method. We use 100 runs in each stage.
 
-HP search space: [CNNs](https://github.com/yorkerlin/remove-the-square-root/tree/main/models/CNNs/wandb-sweep), [SwinViT](https://github.com/yorkerlin/remove-the-square-root/tree/main/models/ViTs/Swin-Transformer/wandb-sweep), [FocalNet](https://github.com/yorkerlin/remove-the-square-root/tree/main/models/ViTs/FocalNet/wandb-sweep), VMamba, GCViT, LSTM, GNN
+HP search space used in our paper: [CNNs](https://github.com/yorkerlin/remove-the-square-root/tree/main/models/CNNs/wandb-sweep), [SwinViT](https://github.com/yorkerlin/remove-the-square-root/tree/main/models/ViTs/Swin-Transformer/wandb-sweep), [FocalNet](https://github.com/yorkerlin/remove-the-square-root/tree/main/models/ViTs/FocalNet/wandb-sweep), GCViT, VMamba, LSTM, GNN
 
 ## Mixed-precision Training 
 For all optimizers, only the forward pass is executed in mixed precision with `BFP-16` (as
@@ -28,5 +28,4 @@ Note:
 * These matrix operations (e.g., eigen, Cholesky, SVD, inversion) in `half-precision` are not supported in PyTorch and JAX because they are numerically unstable (see discussions on [inversion](https://github.com/pytorch/pytorch/issues/40427), [SVD](https://github.com/NVIDIA/apex/issues/887), [Cholesky](https://github.com/tensorflow/tensorflow/issues/56226)).
 * In practice, using one eigen decomposition in `Float32` is 16 times slower than one matrix multiplication in `BFloat16`.
 # Todo
-* add NN models and training scripts considered in our paper
-* add our HP search space for each method (in the second stage) and the optimal HPs used in our paper
+* add all NN models and training scripts considered in our paper
