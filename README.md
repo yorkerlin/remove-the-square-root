@@ -7,7 +7,7 @@ For a clean implementation of the inverse-free Shampoo, please check out this [r
 
 ## Baseline Methods (Square-root-based Methods)
 We use PyTorch’s built-in SGD, AdamW, and RMSProp. For Shampoo, we rely on the
-state-of-the-art [PyTorch implementation](https://github.com/facebookresearch/optimizers/tree/main/distributed_shampoo) from Meta [(Shi et al., 2023)](https://arxiv.org/abs/2309.06497). We tune the hyperparameters (HPs) for each optimizer (see the following HP search space)
+state-of-the-art [PyTorch implementation](https://github.com/facebookresearch/optimizers/tree/main/distributed_shampoo) from Meta [(Shi et al., 2023)](https://arxiv.org/abs/2309.06497). We tune hyperparameters (HPs) for each optimizer (see the following HP search space)
 
 ## Hyperparameter Tuning 
 For matrix adaptive methods (Shampoo and inverse-free Shampoo), we update their matrix preconditioners at each two iterations. By updating the preconditioners less frequently, we can further reduce their wall clock time.
@@ -16,6 +16,8 @@ Unlike  [Choi et al., 2019](https://arxiv.org/abs/1910.05446), we only consider 
 In the first stage, we use larger search regimes for all HPs. Based on this stage, we select a narrower HP range and re-run the search, reporting the best run for each method. We use 100 runs in each stage.
 
 HP search space used in our paper: [CNNs](https://github.com/yorkerlin/remove-the-square-root/tree/main/models/CNNs/wandb-sweep), [SwinViT](https://github.com/yorkerlin/remove-the-square-root/tree/main/models/ViTs/Swin-Transformer/wandb-sweep), [FocalNet](https://github.com/yorkerlin/remove-the-square-root/tree/main/models/ViTs/FocalNet/wandb-sweep), [GCViT](https://github.com/yorkerlin/remove-the-square-root/tree/main/models/ViTs/GCVit/wandb-sweep), VMamba, LSTM, GNN
+
+ `beta2` in AdamW is equivalent to `1-lr_cov` in our notation.
 
 ## Mixed-precision Training 
 For all optimizers, only the forward pass is executed in mixed precision with `BFP-16` (as
