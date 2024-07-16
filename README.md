@@ -17,7 +17,7 @@ In the first stage, we use larger search regimes for all HPs. Based on this stag
 
 HP search space used in our paper: [CNNs](https://github.com/yorkerlin/remove-the-square-root/tree/main/models/CNNs/wandb-sweep), [SwinViT](https://github.com/yorkerlin/remove-the-square-root/tree/main/models/ViTs/Swin-Transformer/wandb-sweep), [FocalNet](https://github.com/yorkerlin/remove-the-square-root/tree/main/models/ViTs/FocalNet/wandb-sweep), [GCViT](https://github.com/yorkerlin/remove-the-square-root/tree/main/models/ViTs/GCVit/wandb-sweep), VMamba, LSTM, GNN
 
- `beta2` in AdamW is equivalent to `1-lr_cov` in our notation.
+Note: `beta2` in AdamW is equivalent to `1-lr_cov` in our notation.
 
 ## Mixed-precision Training 
 For all optimizers, only the forward pass is executed in mixed precision with `BFP-16` (as
