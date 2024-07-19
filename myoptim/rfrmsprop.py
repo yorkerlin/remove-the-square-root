@@ -4,7 +4,7 @@ import torch.optim as optim
 
 class MyRmsProp(optim.Optimizer):
     #root-free RMSProp
-    def __init__(self, params, lr=1e-2, alpha=0.99, eps=1e-8,
+    def __init__(self, params, lr, alpha, eps=1e-4,
             weight_decay=0, momentum=0,
             batch_averaged=True,
             batch_size=None,

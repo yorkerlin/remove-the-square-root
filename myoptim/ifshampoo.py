@@ -10,14 +10,14 @@ class LocalOptimizer_GGT(optim.Optimizer):
     def __init__(
         self,
         model,
-        lr=0.001,
-        momentum=0.9,
-        damping=0.001,
+        lr,
+        momentum,
+        damping=1e-4,
         beta2=0.5, #Riemannian momentum
         weight_decay=0.0,
         T=10,
         batch_averaged=True,
-        lr_cov=1e-2, #weight to update preconditioner factors
+        lr_cov=5e-2, #weight to update preconditioner factors
         batch_size=None,
         cast_dtype = torch.float32,
     ):
